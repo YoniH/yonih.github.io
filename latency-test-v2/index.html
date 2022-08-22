@@ -1,14 +1,84 @@
 <html>
   <head>
+    <script src="./soundtouch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.40/Tone.js"></script>
-    <script src="./index.js"></script>
+    <script src="./index.js" type="module"></script>
+    <style>
+      .table {
+        display: flex;
+        margin-top: 30px;
+      }
+
+      .column {
+        display: flex;
+        flex-direction: column;
+        margin-right: 30px;
+      }
+
+      .cell {
+        height: 40px;
+      }
+    </style>
   </head>
   <body>
     <button id="init">Initialize</button>
-    <div id="description">
+    <div id="content">
       <h3>Hit the following keyboard keys:</h3>
-      e r t y (for tone.js Player)<br />d f g h (for tone.js GrainPlayer)<br />c
-      v b n (for web audio api)
+      <div>
+        <input type="range" id="bpmSlider" min="60" max="200" step="1" />
+        <label id="bpmSliderLabel" />
+      </div>
+      <div>
+        <input type="range" id="pitchSlider" min="-12" max="12" step="1" />
+        <label id="pitchSliderLabel" />
+      </div>
+
+      <div class="table">
+        <div class="column">
+          <div class="cell">3 4 5 6</div>
+          <div class="cell">e r t y</div>
+          <div class="cell">d f g h</div>
+          <div class="cell">c v b n</div>
+        </div>
+        <div class="column">
+          <div class="cell">superpowered</div>
+          <div class="cell">tone.js Player</div>
+          <div class="cell">tone.js GrainPlayer</div>
+          <div class="cell">web audio api with soundtouch</div>
+        </div>
+        <div class="column">
+          <div class="cell"></div>
+          <div class="cell">
+            <span>
+              <input type="checkbox" id="pitchCompensationCheckbox" />
+              <label>pitch compensation</label>
+            </span>
+          </div>
+          <div class="cell">
+            <span>
+              <input
+                type="range"
+                id="grainSizeSlider"
+                min="0.01"
+                max="0.4"
+                step="0.01"
+              />
+              <label id="grainSizeSliderLabel" />
+            </span>
+            <span>
+              <input
+                type="range"
+                id="overlapSlider"
+                min="0.01"
+                max="0.4"
+                step="0.01"
+              />
+              <label id="overlapSliderLabel" />
+            </span>
+          </div>
+          <div class="cell"></div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
