@@ -176,30 +176,18 @@ const main = async () => {
 
   ///
 
-  document.addEventListener("keydown", (e) => {
-    switch (e.key) {
-      case "3":
-        playSuperpoweredSample("kick");
-        break;
-      case "4":
-        playSuperpoweredSample("snare");
-        break;
-      case "5":
-        playSuperpoweredSample("hihat");
-        break;
-      case "6":
-        playSuperpoweredSample("guitar");
-        break;
-      case "e":
-        tonePlayerKick.start();
-        break;
-      case "r":
-        tonePlayerSnare.start();
-        break;
-      case "t":
-        tonePlayerHihat.start();
-        break;
-      case "y":
+  const handlers = {
+    superpowered: {
+      kick: () => playSuperpoweredSample("kick"),
+      snare: () => playSuperpoweredSample("snare"),
+      hihat: () => playSuperpoweredSample("hihat"),
+      guitar: () => playSuperpoweredSample("guitar"),
+    },
+    tonePlayer: {
+      kick: () => tonePlayerKick.start(),
+      snare: () => tonePlayerSnare.start(),
+      hihat: () => tonePlayerHihat.start(),
+      guitar: () => {
         tonePlayerGuitar.start();
 
         if (pitchCompensationCheckbox.checked) {
@@ -207,31 +195,91 @@ const main = async () => {
           const calculatedPitchOffset = 12 * Math.log2(playbackRate);
           setPitch(calculatedPitchOffset * -1);
         }
+      },
+    },
+    toneGrainPlayer: {
+      kick: () => toneGrainPlayerKick.start(),
+      snare: () => toneGrainPlayerSnare.start(),
+      hihat: () => toneGrainPlayerHihat.start(),
+      guitar: () => toneGrainPlayerGuitar.start(),
+    },
+    webAudioApiSoundtouch: {
+      kick: () => playWebAudioApiSample(kickBuffer),
+      snare: () => playWebAudioApiSample(snareBuffer),
+      hihat: () => playWebAudioApiSample(hihatBuffer),
+      guitar: () => playWebAudioApiSample(guitarBuffer),
+    },
+  };
 
+  document.getElementById("btn3").onclick = handlers.superpowered.kick;
+  document.getElementById("btn4").onclick = handlers.superpowered.snare;
+  document.getElementById("btn5").onclick = handlers.superpowered.hihat;
+  document.getElementById("btn6").onclick = handlers.superpowered.guitar;
+  document.getElementById("btne").onclick = handlers.tonePlayer.kick;
+  document.getElementById("btnr").onclick = handlers.tonePlayer.snare;
+  document.getElementById("btnt").onclick = handlers.tonePlayer.hihat;
+  document.getElementById("btny").onclick = handlers.tonePlayer.guitar;
+  document.getElementById("btnd").onclick = handlers.toneGrainPlayer.kick;
+  document.getElementById("btnf").onclick = handlers.toneGrainPlayer.snare;
+  document.getElementById("btng").onclick = handlers.toneGrainPlayer.hihat;
+  document.getElementById("btnh").onclick = handlers.toneGrainPlayer.guitar;
+  document.getElementById("btnc").onclick = handlers.webAudioApiSoundtouch.kick;
+  document.getElementById("btnv").onclick =
+    handlers.webAudioApiSoundtouch.snare;
+  document.getElementById("btnb").onclick =
+    handlers.webAudioApiSoundtouch.hihat;
+  document.getElementById("btnn").onclick =
+    handlers.webAudioApiSoundtouch.guitar;
+
+  document.addEventListener("keydown", (e) => {
+    switch (e.key) {
+      case "3":
+        handlers.superpowered.kick();
+        break;
+      case "4":
+        handlers.superpowered.snare();
+        break;
+      case "5":
+        handlers.superpowered.hihat();
+        break;
+      case "6":
+        handlers.superpowered.guitar();
+        break;
+      case "e":
+        handlers.tonePlayer.kick();
+        break;
+      case "r":
+        handlers.tonePlayer.snare();
+        break;
+      case "t":
+        handlers.tonePlayer.hihat();
+        break;
+      case "y":
+        handlers.tonePlayer.guitar();
         break;
       case "d":
-        toneGrainPlayerKick.start();
+        handlers.toneGrainPlayer.kick();
         break;
       case "f":
-        toneGrainPlayerSnare.start();
+        handlers.toneGrainPlayer.snare();
         break;
       case "g":
-        toneGrainPlayerHihat.start();
+        handlers.toneGrainPlayer.hihat();
         break;
       case "h":
-        toneGrainPlayerGuitar.start();
+        handlers.toneGrainPlayer.guitar();
         break;
       case "c":
-        playWebAudioApiSample(kickBuffer);
+        handlers.webAudioApiSoundtouch.kick();
         break;
       case "v":
-        playWebAudioApiSample(snareBuffer);
+        handlers.webAudioApiSoundtouch.snare();
         break;
       case "b":
-        playWebAudioApiSample(hihatBuffer);
+        handlers.webAudioApiSoundtouch.hihat();
         break;
       case "n":
-        playWebAudioApiSample(guitarBuffer);
+        handlers.webAudioApiSoundtouch.guitar();
         break;
     }
   });
